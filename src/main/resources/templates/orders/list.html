@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head('Orders')"></head>
+<body>
+<nav th:replace="fragments :: nav"></nav>
+<main>
+    <h1>Orders</h1>
+    <p><a class="button" th:href="@{/orders/new}">New order</a></p>
+    <table>
+        <thead>
+        <tr><th>ID</th><th>Customer</th><th>Date</th><th>Status</th><th>Total</th><th>Actions</th></tr>
+        </thead>
+        <tbody>
+        <tr th:each="o : ${orders}">
+            <td th:text="${o.id}"></td>
+            <td th:text="${o.customer.name}"></td>
+            <td th:text="${#temporals.format(o.orderDate, 'yyyy-MM-dd HH:mm')}"></td>
+            <td th:text="${o.status}"></td>
+            <td th:text="${o.totalAmount}"></td>
+            <td><a th:href="@{'/orders/' + ${o.id}}">View</a></td>
+        </tr>
+        <tr th:if="${orders.isEmpty()}"><td colspan="6">No records</td></tr>
+        </tbody>
+    </table>
+</main>
+</body>
+</html>

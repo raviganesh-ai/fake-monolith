@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head('Adjust stock')"></head>
+<body>
+<nav th:replace="fragments :: nav"></nav>
+<main>
+    <h1>Adjust stock</h1>
+    <p><strong th:text="${product.name}"></strong> (SKU <span th:text="${product.sku}"></span>)</p>
+    <p class="error" th:if="${error}" th:text="${error}"></p>
+    <form method="post" th:action="@{'/inventory/' + ${product.id} + '/adjust'}">
+        <p>
+            <label for="quantityOnHand">Quantity on hand</label>
+            <input id="quantityOnHand" name="quantityOnHand" type="number" min="0" th:value="${quantityOnHand}" required>
+        </p>
+        <p><button type="submit">Save</button> <a th:href="@{/inventory}">Cancel</a></p>
+    </form>
+</main>
+</body>
+</html>

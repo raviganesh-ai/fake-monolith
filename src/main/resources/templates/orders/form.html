@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head('New order')"></head>
+<body>
+<nav th:replace="fragments :: nav"></nav>
+<main>
+    <h1>New order</h1>
+    <p class="error" th:if="${error}" th:text="${error}"></p>
+    <form method="post" th:action="@{/orders}">
+        <p>
+            <label for="customerId">Customer</label>
+            <select id="customerId" name="customerId" required>
+                <option value="">-- select customer --</option>
+                <option th:each="c : ${customers}" th:value="${c.id}" th:text="${c.name}"></option>
+            </select>
+        </p>
+        <table>
+            <thead>
+            <tr><th>Product</th><th>Quantity</th></tr>
+            </thead>
+            <tbody>
+            <tr th:each="r : ${rows}">
+                <td>
+                    <select name="productId">
+                        <option value="">-- none --</option>
+                        <option th:each="p : ${products}" th:value="${p.id}"
+                                th:text="${p.name + ' (stock ' + p.quantityOnHand + ')'}"></option>
+                    </select>
+                </td>
+                <td><input name="quantity" type="number" min="0" value="0"></td>
+            </tr>
+            </tbody>
+        </table>
+        <p><button type="submit">Place order</button> <a th:href="@{/orders}">Cancel</a></p>
+    </form>
+</main>
+</body>
+</html>
