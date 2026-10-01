@@ -280,3 +280,28 @@ Append-only replay-execution log for the baseline release of the `fake-monolith`
   `LICENSE`
   `README.md`
 - **Notes:** Hosting is local-only (no remote); branch-and-PR flow is realized as local feature branches merged into main (direct commits to main prohibited except this bootstrap genesis, per sdlc §8.3). README deeper sections completed at 3m. Toolchain (Maven/Java 8) lives inside the container build (W-1, W-8), not installed on the host.
+
+### 012 · meta/autopilot-enable · —
+
+- **Timestamp:** 2026-10-01T23:40:00Z
+- **Approval outcome:** Approved
+- **Approved prompt:**
+
+  ```
+  Goal: Authorize Autopilot execution mode for the EXECUTE stage of release R-Z7UL7V.
+  Scope: core §1; sdlc §5.1 Autopilot authorization.
+  Inputs: Human User request ("Autopilot now", honored at the earliest valid point —
+  after 3a Setup provisioned the repository).
+  Action: Record the authorized Autopilot scope and anchor it to a commit authored by
+  the authorizing Human User.
+  Expected output: A meta/autopilot-enable entry enabling scoped self-approval.
+  Acceptance criteria: Scope explicitly stated; evidence is a version-control anchor
+  authored by the Human User (commit authorship, the accepted L1 evidence); hard
+  guardrails preserved.
+  Tools/integrations: git (local commit authored by the Human User); replay-log append.
+  No external services.
+  ```
+
+- **Execution outcome:** autopilot enabled
+- **Artifact / path changed:** `—`
+- **Notes:** Authorized scope: **EXECUTE** for release R-Z7UL7V — stage tasks 3b, 3d (secret-scan), 3f, 3m, and the added container packaging (W-8), across work items W-1 through W-8. Constraints: local-only, no cloud, no incurred cost, no production exposure. **Human anchor:** this entry is recorded in a git commit authored by the authorizing Human User, ajai-d <ajai-d@outlook.com>; at Level 1 the accepted evidence is commit authorship (verified-signature or platform-authenticated PR approval is required only at L3+). Hard guardrails remain enforced and still require explicit Human User approval even under Autopilot: any Escalate, Refine-cycle exhaustion, trust-boundary crossing, irreversible/cost-incurring action, or first exposure to real users/data — none expected in this local-only release. Revocable at any time ("Stop"/"Interactive"). Subsequent self-approved gates will carry the attribution "Auto-approved under Autopilot (per R-Z7UL7V-012)".

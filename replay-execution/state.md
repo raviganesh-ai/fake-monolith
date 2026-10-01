@@ -6,14 +6,14 @@
 |-------|-------|
 | Active release ID | R-Z7UL7V |
 | Specialization | baseline SDLC (`sdlc`) |
-| Stage / gate position | EXECUTE in progress — 3a Setup complete (repo initialized); next anchor Autopilot, then W-1 |
+| Stage / gate position | EXECUTE in progress — 3a complete, Autopilot enabled; next W-1 scaffolding |
 | Active risk level | Level 1 (floor) — reduced rigor + not-for-real-use acknowledged (AI assessed L2, overridden down) |
-| Execution mode | Interactive (Autopilot enable next, now that repo exists) |
-| Autopilot scope | — (enabling next for EXECUTE) |
-| Highest sequence ID (R-Z7UL7V) | 011 |
+| Execution mode | Autopilot (per R-Z7UL7V-012) |
+| Autopilot scope | EXECUTE (3b, 3d, 3f, 3m, W-8) for R-Z7UL7V; local-only, no cost, no production; hard guardrails preserved; revocable anytime |
+| Highest sequence ID (R-Z7UL7V) | 012 |
 | Open work items | W-1, W-2, W-3, W-4, W-5, W-6, W-7, W-8 (all pending) |
-| Reconciliation watermark | R-Z7UL7V-011 |
+| Reconciliation watermark | R-Z7UL7V-012 |
 
 ## Next action
 
-Enter EXECUTE (Sequential). Start 3a Setup (repo init, toolchain, essential files, README hero). Immediately after the repo exists, set up the anchored Autopilot authorization for EXECUTE. Applied L1 EXECUTE set: 3a, 3b, 3d (secret-scan), 3f, 3m, plus added container packaging (W-8). Per-work-item order: 3b → 3f → merge. Tested ACs: AC-1…AC-4.
+EXECUTE under Autopilot (Sequential). Build the work items on local feature branches with branch-scoped replay logs (§8.1.2), merging into main. Bundle per sdlc §5.1. Per-item order 3b → 3f. Self-approve gates with attribution "Auto-approved under Autopilot (per R-Z7UL7V-012)"; still present results; hard guardrails still require the Human User. Finish with 3m closeout + EXECUTE-EXIT. Tested ACs: AC-1…AC-4.
