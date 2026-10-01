@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head('Customers')"></head>
+<body>
+<nav th:replace="fragments :: nav"></nav>
+<main>
+    <h1>Customers</h1>
+    <p><a class="button" th:href="@{/customers/new}">New customer</a></p>
+    <table>
+        <thead>
+        <tr><th>ID</th><th>Name</th><th>Email</th><th>Phone</th></tr>
+        </thead>
+        <tbody>
+        <tr th:each="c : ${customers}">
+            <td th:text="${c.id}"></td>
+            <td th:text="${c.name}"></td>
+            <td th:text="${c.email}"></td>
+            <td th:text="${c.phone}"></td>
+        </tr>
+        <tr th:if="${customers.isEmpty()}"><td colspan="4">No records</td></tr>
+        </tbody>
+    </table>
+</main>
+</body>
+</html>

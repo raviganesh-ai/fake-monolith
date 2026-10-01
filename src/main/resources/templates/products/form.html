@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head('Product')"></head>
+<body>
+<nav th:replace="fragments :: nav"></nav>
+<main>
+    <h1 th:text="${id} != null ? 'Edit product' : 'New product'">Product</h1>
+    <p class="error" th:if="${error}" th:text="${error}"></p>
+    <form method="post" th:action="@{/products}">
+        <input type="hidden" name="id" th:value="${id}">
+        <p><label for="sku">SKU</label><input id="sku" name="sku" th:value="${sku}" required></p>
+        <p><label for="name">Name</label><input id="name" name="name" th:value="${name}" required></p>
+        <p><label for="description">Description</label><input id="description" name="description" th:value="${description}"></p>
+        <p><label for="unitPrice">Unit price</label><input id="unitPrice" name="unitPrice" type="number" step="0.01" min="0" th:value="${unitPrice}" required></p>
+        <p><button type="submit">Save</button> <a th:href="@{/products}">Cancel</a></p>
+    </form>
+</main>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head('Inventory')"></head>
+<body>
+<nav th:replace="fragments :: nav"></nav>
+<main>
+    <h1>Inventory</h1>
+    <table>
+        <thead>
+        <tr><th>SKU</th><th>Product</th><th>Stock on hand</th><th>Actions</th></tr>
+        </thead>
+        <tbody>
+        <tr th:each="p : ${products}">
+            <td th:text="${p.sku}"></td>
+            <td th:text="${p.name}"></td>
+            <td th:text="${p.quantityOnHand}"></td>
+            <td><a th:href="@{'/inventory/' + ${p.id} + '/adjust'}">Adjust stock</a></td>
+        </tr>
+        <tr th:if="${products.isEmpty()}"><td colspan="4">No records</td></tr>
+        </tbody>
+    </table>
+</main>
+</body>
+</html>

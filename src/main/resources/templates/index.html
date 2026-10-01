@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head('Order Management')"></head>
+<body>
+<nav th:replace="fragments :: nav"></nav>
+<main>
+    <h1>Order Management</h1>
+    <p>A fictional legacy monolith for demos and modernization exercises. Data is sample only and resets on restart.</p>
+    <ul class="stats">
+        <li>Customers: <strong th:text="${customerCount}">0</strong></li>
+        <li>Products: <strong th:text="${productCount}">0</strong></li>
+        <li>Orders: <strong th:text="${orderCount}">0</strong></li>
+    </ul>
+</main>
+</body>
+</html>
