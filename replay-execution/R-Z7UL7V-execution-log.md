@@ -490,3 +490,11 @@ Append-only replay-execution log for the baseline release of the `fake-monolith`
 - **Execution outcome:** Removed duplication in the Architecture section (prose no longer narrates the diagram).
 - **Artifact / path changed:** `README.md`
 - **Notes:** Out-of-band documentation refinement after EXECUTE-EXIT (024), at the Human User's direction. The Architecture prose paragraph narrated the same request flow (browser → web → service → repository → H2) that the architecture diagram already shows. Rewrote the prose to carry the design rationale (single process, shared JPA entities, package-by-layer legacy coupling as a modernization target) and let the diagram show the structure/flow; the components and technology tables are kept (they add source links and tech rationale, not duplication). The TWTTY project README template's Architecture guidance was updated to instruct against narrating the diagram in prose. Documentation only, no behavior change.
+
+### 034 · meta/backfill · —
+
+- **Timestamp:** 2026-10-02T04:05:00Z
+- **Approval outcome:** Approved with changes
+- **Execution outcome:** README Architecture no longer duplicates the plan; it summarizes and links to the plan as source of truth.
+- **Artifact / path changed:** `README.md`
+- **Notes:** Out-of-band documentation refinement after EXECUTE-EXIT (024), at the Human User's direction. The README's Architecture section reproduced the components table (plan §1 Architecture) and technology table (plan §1.5 Technology choices), which would drift out of sync with the plan as the project evolves. Removed both tables from the README and replaced them with a one-line Stack summary plus a link to [`plan/plan-R-Z7UL7V.md`](plan/plan-R-Z7UL7V.md) as the single source of truth for the full component breakdown, design decisions, and technology rationale. The concise architecture diagram and rationale prose remain so a reader still grasps the shape. Code navigation is preserved by the existing Project structure section. The TWTTY project README template was updated with the same pattern and guidance: summarize and link to the plan; do not copy the plan's component/technology tables into the README. Documentation only, no behavior change.

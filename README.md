@@ -78,25 +78,9 @@ flowchart LR
     classDef data fill:#F3E5F5,stroke:#6A1B9A,color:#111;
 ```
 
-**Components**
+**Stack:** Java 8 · Spring Boot 2.7 · Spring MVC + Thymeleaf · Spring Data JPA · H2 (in-memory) · Maven · Docker.
 
-| Component | Responsibility | Source |
-| --- | --- | --- |
-| Web layer | Controllers, Thymeleaf views, form validation, error pages | [`web/`](src/main/java/com/example/monolith/web) |
-| Service layer | Order placement, stock validation, totals, status transitions, cancel-restock | [`service/`](src/main/java/com/example/monolith/service) |
-| Repository layer | Spring Data JPA repositories | [`repository/`](src/main/java/com/example/monolith/repository) |
-| Domain model | Shared JPA entities and the order-status enum | [`domain/`](src/main/java/com/example/monolith/domain) |
-| Data initializer | Seeds fictional demo data at startup | [`init/`](src/main/java/com/example/monolith/init) |
-
-**Technology**
-
-| Layer | Choice | Why |
-| --- | --- | --- |
-| Runtime | Java 8 | The legacy runtime the application targets |
-| Framework | Spring Boot 2.7 | Last Spring Boot line supporting Java 8 |
-| Web | Spring MVC + Thymeleaf | Server-rendered HTML, no separate front end |
-| Persistence | Spring Data JPA + H2 (in-memory) | Embedded datastore, auto-seeded, zero external setup |
-| Build & run | Maven + Docker (multi-stage) | Build and run with no host-side toolchain |
+The authoritative architecture — the full component breakdown, design decisions, and technology rationale — lives in the plan, [`plan/plan-R-Z7UL7V.md`](plan/plan-R-Z7UL7V.md), which is maintained as the single source of truth.
 
 ## Usage
 
