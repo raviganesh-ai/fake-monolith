@@ -450,3 +450,11 @@ Append-only replay-execution log for the baseline release of the `fake-monolith`
 - **Execution outcome:** README restructured to a professional, product-first layout.
 - **Artifact / path changed:** `README.md`
 - **Notes:** Out-of-band documentation change after EXECUTE-EXIT (024), at the Human User's direction (superseding entry 027). The TWTTY project README template was redesigned again to be a professional, product-first README rather than a methodology advertisement: a reader can understand the application, its architecture, and how to run it in one pass. Removed the "100% AI-authored" framing and the "receipts" hero hook; TWTTY is now a single tasteful attribution line near the top linking to a dedicated "How this project was built" section at the end. Added Overview, Features, Architecture (diagram + components table + technology table), Quickstart, Usage, Project structure, Configuration, and Testing sections. This release's README was regenerated from the new template with real values; documentation only, no behavior change.
+
+### 029 · meta/backfill · —
+
+- **Timestamp:** 2026-10-02T03:05:00Z
+- **Approval outcome:** Approved with changes
+- **Execution outcome:** README section order and stage diagram refined.
+- **Artifact / path changed:** `README.md`
+- **Notes:** Out-of-band documentation refinement after EXECUTE-EXIT (024), at the Human User's direction (continues entry 028). Moved Quickstart above Architecture (run first, then understand), and restored the gated stage diagram in "How this project was built" — the SEED/SPEC/PLAN/EXECUTE flow with dotted `*-EXIT` gate markers. The same two changes were applied to the TWTTY project README template in the methodology repository. Documentation only, no behavior change.

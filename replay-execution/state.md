@@ -10,9 +10,9 @@
 | Active risk level | Level 1 (floor) — reduced rigor + not-for-real-use acknowledged (AI assessed L2, overridden down) |
 | Execution mode | Autopilot (per R-Z7UL7V-012) — EXECUTE self-approved within scope |
 | Autopilot scope | EXECUTE (3b, 3d, 3f, 3m, W-8) for R-Z7UL7V; local-only; completed |
-| Highest sequence ID (R-Z7UL7V) | 028 |
+| Highest sequence ID (R-Z7UL7V) | 029 |
 | Open work items | None — W-1…W-8 all delivered and merged |
-| Reconciliation watermark | R-Z7UL7V-028 |
+| Reconciliation watermark | R-Z7UL7V-029 |
 | Remote | origin = https://github.com/ajai-d/fake-monolith (private) |
 
 ## Next action

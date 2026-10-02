@@ -35,6 +35,30 @@ It is deliberately built in a **legacy three-tier style** (Spring MVC + Thymelea
 - **Auto-seeded demo data** — ~20 customers, 30 products, and 50 orders are created on startup.
 - **One-command local run** — starts in Docker with no host-side Java or Maven install.
 
+## Quickstart
+
+### Prerequisites
+
+**Docker** (Docker Desktop or a compatible engine) is the only requirement. Java 8, Maven, and all dependencies run inside the container build — nothing is installed on your host.
+
+```powershell
+docker --version    # verify Docker is installed and running
+```
+
+### Run
+
+```powershell
+git clone https://github.com/ajai-d/fake-monolith.git
+cd fake-monolith
+docker compose up --build
+```
+
+The first build pulls base images and dependencies (a few minutes); later runs are fast. When it's up, open **http://localhost:8080**. Stop and remove the container with `docker compose down`.
+
+### Verify
+
+The home page shows the seeded counts (20 customers, 30 products, 50 orders). Navigate to **Orders** to see the seeded orders, or **Products** to see the catalog. Data is held in memory and resets on each restart.
+
 ## Architecture
 
 The application is a single Spring Boot process with three clearly separated layers. A browser request enters the **web layer** (Spring MVC controllers rendering Thymeleaf pages), which delegates to the **service layer** that holds the business rules, which in turn uses the **repository layer** (Spring Data JPA) to read and write an embedded H2 database. All layers share the same JPA domain entities — a deliberate, legacy-style coupling that is part of what makes the codebase a useful modernization exercise.
@@ -73,30 +97,6 @@ flowchart LR
 | Web | Spring MVC + Thymeleaf | Server-rendered HTML, no separate front end |
 | Persistence | Spring Data JPA + H2 (in-memory) | Embedded datastore, auto-seeded, zero external setup |
 | Build & run | Maven + Docker (multi-stage) | Build and run with no host-side toolchain |
-
-## Quickstart
-
-### Prerequisites
-
-**Docker** (Docker Desktop or a compatible engine) is the only requirement. Java 8, Maven, and all dependencies run inside the container build — nothing is installed on your host.
-
-```powershell
-docker --version    # verify Docker is installed and running
-```
-
-### Run
-
-```powershell
-git clone https://github.com/ajai-d/fake-monolith.git
-cd fake-monolith
-docker compose up --build
-```
-
-The first build pulls base images and dependencies (a few minutes); later runs are fast. When it's up, open **http://localhost:8080**. Stop and remove the container with `docker compose down`.
-
-### Verify
-
-The home page shows the seeded counts (20 customers, 30 products, 50 orders). Navigate to **Orders** to see the seeded orders, or **Products** to see the catalog. Data is held in memory and resets on each restart.
 
 ## Usage
 
@@ -156,15 +156,20 @@ Four acceptance tests cover the core behavior: the application serves its home p
 
 ## How this project was built
 
-This project was built with the **[Promptless Agentic SDLC (TWTTY)](https://github.com/ajai-d/promptless-agentic-sdlc)** — a methodology in which a developer captures intent in plain English and an AI agent proposes each step, executes only what the human approves, and records every decision. It is **spec-driven and human-governed**: the work moves through four stages, each ending in an explicit approval gate.
+This project was built with the **[Promptless Agentic SDLC (TWTTY)](https://github.com/ajai-d/promptless-agentic-sdlc)** — a methodology in which a developer captures intent in plain English and an AI agent proposes each step, executes only what the human approves, and records every decision. It is **spec-driven and human-governed**: the work moves through four stages, each ending in an explicit approval gate (`SEED-EXIT`, `SPEC-EXIT`, `PLAN-EXIT`, `EXECUTE-EXIT`) that a human signs off before the next stage begins.
 
 ```mermaid
 flowchart LR
     seed["SEED<br/>intent"]:::actor --> spec["SPEC<br/>requirements and acceptance criteria"]:::compute
     spec --> plan["PLAN<br/>architecture and work breakdown"]:::compute
     plan --> exec["EXECUTE<br/>build, test, deliver"]:::compute
+    seed -.->|SEED-EXIT| g1(("✓")):::gate
+    spec -.->|SPEC-EXIT| g2(("✓")):::gate
+    plan -.->|PLAN-EXIT| g3(("✓")):::gate
+    exec -.->|EXECUTE-EXIT| g4(("✓")):::gate
     classDef actor fill:#E3F2FD,stroke:#1565C0,color:#111;
     classDef compute fill:#E8F5E9,stroke:#2E7D32,color:#111;
+    classDef gate fill:#FFF8E1,stroke:#F9A825,color:#111;
 ```
 
 The complete, auditable record is in the repository — read it to understand *why* the code is shaped the way it is, or to reproduce the work:
