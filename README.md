@@ -18,16 +18,18 @@ All three tiers — Spring MVC presentation, service-layer business logic, and S
 
 ## Try it locally (Docker only)
 
-> Java 8 and Maven run **inside** the container build — nothing legacy is installed on your host. Docker is the only prerequisite.
+> **The only thing you need installed is Docker** (Docker Desktop or a compatible engine). Java 8, Maven, and every dependency are downloaded and run *inside* the container build — nothing is installed on your host.
+
+From the project folder's root:
 
 ```powershell
-# from the repository root
-docker compose up --build
+docker compose up --build    # build the image and start the app
+# first run pulls base images and downloads dependencies (a few minutes); later runs are fast
 # then open http://localhost:8080
-docker compose down
+docker compose down          # stop and remove the container
 ```
 
-*(Build/run wiring is delivered by work item W-8 during EXECUTE; see the plan.)*
+The data is fictional and held in memory, so it resets every time the app restarts.
 
 ## How this was built
 

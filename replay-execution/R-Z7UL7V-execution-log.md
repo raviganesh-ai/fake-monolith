@@ -418,3 +418,11 @@ Append-only replay-execution log for the baseline release of the `fake-monolith`
   `replay-execution/R-Z7UL7V-execution-diagram.md`
   `replay-execution/state.md`
 - **Notes:** L1 §7.1 MUST-row attestation: secret scanning done, no Critical/any findings; every AC has an AC-ID-referencing test; tests independently runnable; tool/dependency output treated as untrusted; no trust-boundary customization surfaces used (no MCP/hooks); replay-execution scanned for secrets/PII (clean); data classification/PII/retention declared in spec §14; encryption-in-transit = loopback-only (no network boundary); .gitignore/LICENSE/README present and README completed from the template. Build: `mvn package` SUCCESS, 4/4 tests. Live: container serves HTTP 200, seed 20/30/50, `docker compose down` clean. Showcase submission: not offered interactively (Autopilot, local fixture); may be revisited. Auto-approved under Autopilot (per R-Z7UL7V-012).
+
+### 025 · meta/backfill · —
+
+- **Timestamp:** 2026-10-02T00:08:00Z
+- **Approval outcome:** Approved with changes
+- **Execution outcome:** Post-release README correction recorded to avoid drift.
+- **Artifact / path changed:** `README.md`
+- **Notes:** Out-of-band change after EXECUTE-EXIT (024), at the Human User's request to confirm the README fully documents local build/run without installing anything. Corrects the "Try it locally" section: removed a stale parenthetical ("Build/run wiring is delivered by work item W-8 during EXECUTE; see the plan") that was written at 3a Setup before W-8 existed and became misleading once the container shipped; clarified that Docker is the only host prerequisite and that Java/Maven/dependencies run inside the build; added first-build-time and in-memory-data-reset notes. Documentation-only clarification of the already-delivered artifact; no behavior change. References and corrects entry 024. Auto-approved under Autopilot (per R-Z7UL7V-012); substantive changes would instead warrant a new Release Scope.
