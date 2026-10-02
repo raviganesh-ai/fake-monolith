@@ -466,3 +466,11 @@ Append-only replay-execution log for the baseline release of the `fake-monolith`
 - **Execution outcome:** Corrected an inaccurate statement in the README's "How this project was built" section.
 - **Artifact / path changed:** `README.md`
 - **Notes:** Out-of-band documentation correction after EXECUTE-EXIT (024), at the Human User's direction. The prior wording ("executes only what the human approves" and "a human signs off before the next stage begins") was inaccurate: under Autopilot the agent self-approves within a human-authorized scope. For this project specifically, the SEED, SPEC, and PLAN gates were approved interactively, then Autopilot was authorized for EXECUTE (entry 012), so the build steps and EXECUTE-EXIT itself (entry 024) were self-approved by the agent, not per-step human-approved. Corrected the README to state this accurately, and corrected the generic TWTTY project README template in the methodology repository to describe both Interactive and Autopilot modes. Documentation only, no behavior change.
+
+### 031 · meta/backfill · —
+
+- **Timestamp:** 2026-10-02T03:35:00Z
+- **Approval outcome:** Approved with changes
+- **Execution outcome:** README condensed to a concise, summary-level document.
+- **Artifact / path changed:** `README.md`
+- **Notes:** Out-of-band documentation refinement after EXECUTE-EXIT (024), at the Human User's direction. Shortened the README to roughly half its length: folded the feature list into Overview, replaced the components and technology tables with a one-line Stack summary (the architecture diagram already conveys the components), and removed the Project structure and Configuration sections. Kept Overview, Quickstart, Architecture (with diagram), Usage, Testing, and a concise "How this project was built" with the gated stage diagram. The same conciseness pass and guidance were applied to the TWTTY project README template in the methodology repository. Documentation only, no behavior change.

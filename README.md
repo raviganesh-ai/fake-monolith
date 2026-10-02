@@ -2,74 +2,48 @@
 
 # Order Management Monolith
 
-#### A three-tier Java 8 / Spring Boot 2.7 order-management application — server-rendered, self-contained, and runnable with a single Docker command.
+#### A three-tier Java 8 / Spring Boot 2.7 order-management app — server-rendered, self-contained, and runnable with a single Docker command.
 
 [![Tests](https://img.shields.io/badge/tests-4%20passing-3FB950)](src/test/)
 [![Stack](https://img.shields.io/badge/stack-Java%208%20%7C%20Spring%20Boot%202.7-E8820C)](pom.xml)
 [![License](https://img.shields.io/badge/license-MIT-8B949E)](LICENSE)
 [![Built with TWTTY](https://img.shields.io/badge/built%20with-Promptless%20Agentic%20SDLC-7A3FBF)](#how-this-project-was-built)
 
-[Quickstart](#quickstart) &nbsp;·&nbsp; [Architecture](#architecture) &nbsp;·&nbsp; [Usage](#usage)
+[Quickstart](#quickstart) &nbsp;·&nbsp; [Architecture](#architecture) &nbsp;·&nbsp; [How it was built](#how-this-project-was-built)
 
 </div>
 
-> Built with the **[Promptless Agentic SDLC (TWTTY)](#how-this-project-was-built)** — a spec-driven, human-governed engineering workflow. The full requirements, plan, and decision record live in-repo; see [How this project was built](#how-this-project-was-built).
+> Built with the **[Promptless Agentic SDLC (TWTTY)](#how-this-project-was-built)** — a spec-driven, human-governed engineering workflow.
 
 ---
 
 ## Overview
 
-Order Management Monolith is a small, self-contained web application for running a simple order desk: an operations user manages customers, products, inventory, and orders from server-rendered pages in the browser. It models the core of an order-management system — placing orders against live stock, computing totals, and moving orders through their lifecycle — in a single deployable process.
-
-It is deliberately built in a **legacy three-tier style** (Spring MVC + Thymeleaf over a Spring service layer over Spring Data JPA, with shared domain entities and package-by-layer organization) on an intentionally older framework generation. That makes it a realistic, understandable target for **demonstrations, teaching, and modernization exercises** — for example, splitting a monolith into services or migrating off an end-of-life framework.
-
-**Scope and boundaries.** The application uses only fictional, in-memory data that resets on restart. It is a reference/fixture application, not a production system: there is no authentication, no external integrations, and no persistent datastore. Its "legacy" character comes from its architecture and framework age, not from intentionally insecure code.
-
-## Features
-
-- Manage **customers** — create and list customer records.
-- Manage **products** — create and edit products with unique SKUs and prices.
-- Manage **inventory** — adjust on-hand stock per product.
-- Place **orders** — add line items, validate against available stock, and compute line and order totals in one transaction.
-- Move orders through their **lifecycle** — `NEW → CONFIRMED → SHIPPED`, or cancel (which restocks the items).
-- **Auto-seeded demo data** — ~20 customers, 30 products, and 50 orders are created on startup.
-- **One-command local run** — starts in Docker with no host-side Java or Maven install.
+A self-contained web app for a simple order desk: an operations user manages customers, products, inventory, and orders from server-rendered pages — placing orders against live stock, computing totals, and moving them through their lifecycle (`NEW → CONFIRMED → SHIPPED`, or cancel-and-restock). It's a deliberately legacy three-tier Spring application on an end-of-life framework, which makes it a realistic target for demos and modernization exercises. Data is fictional and in-memory (it resets on restart); this is a reference fixture, not a production system.
 
 ## Quickstart
 
-### Prerequisites
-
-**Docker** (Docker Desktop or a compatible engine) is the only requirement. Java 8, Maven, and all dependencies run inside the container build — nothing is installed on your host.
-
-```powershell
-docker --version    # verify Docker is installed and running
-```
-
-### Run
+Docker is the only prerequisite — Java 8 and Maven run inside the build.
 
 ```powershell
 git clone https://github.com/ajai-d/fake-monolith.git
 cd fake-monolith
-docker compose up --build
+docker compose up --build    # open http://localhost:8080  (docker compose down to stop)
 ```
 
-The first build pulls base images and dependencies (a few minutes); later runs are fast. When it's up, open **http://localhost:8080**. Stop and remove the container with `docker compose down`.
-
-### Verify
-
-The home page shows the seeded counts (20 customers, 30 products, 50 orders). Navigate to **Orders** to see the seeded orders, or **Products** to see the catalog. Data is held in memory and resets on each restart.
+On startup it seeds ~20 customers, 30 products, and 50 orders.
 
 ## Architecture
 
-The application is a single Spring Boot process with three clearly separated layers. A browser request enters the **web layer** (Spring MVC controllers rendering Thymeleaf pages), which delegates to the **service layer** that holds the business rules, which in turn uses the **repository layer** (Spring Data JPA) to read and write an embedded H2 database. All layers share the same JPA domain entities — a deliberate, legacy-style coupling that is part of what makes the codebase a useful modernization exercise.
+Three layers in one Spring Boot process: a Spring MVC + Thymeleaf **web** layer delegates to a **service** layer (business rules), which uses a Spring Data JPA **repository** layer over an embedded in-memory **H2** database. All layers share the same JPA entities — intentional legacy coupling.
 
 ```mermaid
 flowchart LR
     browser["Operations user<br/>(browser)"]:::actor
     subgraph app["Order Management Monolith (one Spring Boot process)"]
-        web["Web layer<br/>Spring MVC + Thymeleaf"]:::compute
-        svc["Service layer<br/>business rules"]:::compute
-        repo["Repository layer<br/>Spring Data JPA"]:::compute
+        web["Web<br/>Spring MVC + Thymeleaf"]:::compute
+        svc["Service<br/>business rules"]:::compute
+        repo["Repository<br/>Spring Data JPA"]:::compute
         h2[("Embedded H2<br/>in memory")]:::data
     end
     browser -->|HTTP| web --> svc --> repo --> h2
@@ -78,85 +52,25 @@ flowchart LR
     classDef data fill:#F3E5F5,stroke:#6A1B9A,color:#111;
 ```
 
-**Components**
-
-| Component | Responsibility | Source |
-| --- | --- | --- |
-| Web layer | Controllers, Thymeleaf views, form validation, error pages | [`web/`](src/main/java/com/example/monolith/web) |
-| Service layer | Order placement, stock validation, totals, status transitions, cancel-restock | [`service/`](src/main/java/com/example/monolith/service) |
-| Repository layer | Spring Data JPA repositories | [`repository/`](src/main/java/com/example/monolith/repository) |
-| Domain model | Shared JPA entities and the order-status enum | [`domain/`](src/main/java/com/example/monolith/domain) |
-| Data initializer | Seeds fictional demo data at startup | [`init/`](src/main/java/com/example/monolith/init) |
-
-**Technology**
-
-| Layer | Choice | Why |
-| --- | --- | --- |
-| Runtime | Java 8 | The legacy runtime the application targets |
-| Framework | Spring Boot 2.7 | Last Spring Boot line supporting Java 8 |
-| Web | Spring MVC + Thymeleaf | Server-rendered HTML, no separate front end |
-| Persistence | Spring Data JPA + H2 (in-memory) | Embedded datastore, auto-seeded, zero external setup |
-| Build & run | Maven + Docker (multi-stage) | Build and run with no host-side toolchain |
+**Stack:** Java 8 · Spring Boot 2.7 · Spring MVC + Thymeleaf · Spring Data JPA · H2 · Maven · Docker.
 
 ## Usage
 
-The top navigation links the four areas — Customers, Products, Inventory, Orders — plus **New order**. A typical end-to-end flow:
-
-1. **Add a customer** — *Customers → New customer*, enter a name (required) and optional contact details.
-2. **Add a product** — *Products → New product*, enter a unique SKU, name, and unit price.
-3. **Set stock** — *Inventory → Adjust stock* for the product, enter the quantity on hand.
-4. **Place an order** — *New order*, pick the customer, add product lines with quantities, and submit. The order is accepted only if every line is within available stock; on success it decrements stock and records line totals and an order total. Over-stock orders are rejected as a whole, leaving stock unchanged.
-5. **Progress the order** — open it from *Orders*, then **Confirm → Ship**, or **Cancel** (which returns the items to stock).
-
-## Project structure
-
-```text
-fake-monolith/
-├── src/main/java/com/example/monolith/
-│   ├── web/            Controllers, exception handler
-│   ├── service/        Business rules (orders, inventory, products, customers)
-│   ├── repository/     Spring Data JPA repositories
-│   ├── domain/         JPA entities + OrderStatus enum
-│   ├── init/           Startup data seeding
-│   └── Application.java
-├── src/main/resources/
-│   ├── templates/      Thymeleaf views
-│   ├── static/css/     Stylesheet
-│   └── application.properties
-├── src/test/           Acceptance tests
-├── Dockerfile          Multi-stage build (Maven+JDK8 → JRE8), non-root
-├── docker-compose.yml  Single service, port 8080
-├── seed/               Human intent (TWTTY SEED output)
-├── spec/               Requirements and acceptance criteria (SPEC)
-├── plan/               Architecture and work breakdown (PLAN)
-└── replay-execution/   Append-only record of how it was built
-```
-
-## Configuration
-
-Configuration lives in [`src/main/resources/application.properties`](src/main/resources/application.properties):
-
-| Setting | Default | Purpose |
-| --- | --- | --- |
-| `server.port` | `8080` | HTTP port (also mapped in `docker-compose.yml`) |
-| `spring.datasource.url` | `jdbc:h2:mem:ordersdb` | In-memory H2 database |
-| `spring.jpa.hibernate.ddl-auto` | `create` | Recreate the schema on each start |
+The top navigation links Customers, Products, Inventory, and Orders. A typical flow: add a product and set its stock → place an order (validated against stock, with line and order totals computed) → advance it (Confirm → Ship) or cancel it (which restocks the items).
 
 ## Testing
-
-The test suite runs inside the Maven container, so you still install nothing:
 
 ```powershell
 docker run --rm -v ${PWD}:/app -w /app maven:3.9-eclipse-temurin-8 mvn test
 ```
 
-Four acceptance tests cover the core behavior: the application serves its home page; placing a valid order decrements stock and computes totals; an over-stock order is rejected transactionally; and cancelling an order restocks its items.
+Four acceptance tests cover: the app serves; valid orders decrement stock and compute totals; over-stock orders are rejected transactionally; and cancelling restocks.
 
 ---
 
 ## How this project was built
 
-This project was built with the **[Promptless Agentic SDLC (TWTTY)](https://github.com/ajai-d/promptless-agentic-sdlc)** — a methodology in which a developer captures intent in plain English and an AI agent proposes each step and records every decision in an append-only log. It is **spec-driven and human-governed**: work moves through four stages, each ending in an explicit approval gate (`SEED-EXIT`, `SPEC-EXIT`, `PLAN-EXIT`, `EXECUTE-EXIT`). For this project, the developer approved the `SEED`, `SPEC`, and `PLAN` gates interactively, then authorized **Autopilot** for the build — so during `EXECUTE` the agent self-approved each step within that scope and logged every one, with high-impact actions still reserved for explicit human approval.
+This project was built with the **[Promptless Agentic SDLC (TWTTY)](https://github.com/ajai-d/promptless-agentic-sdlc)**: a developer captured intent in plain English and an AI agent drove the work through four human-governed stages — each ending in an approval gate — recording every decision in an append-only log. Here, the developer approved `SEED` / `SPEC` / `PLAN` interactively, then authorized Autopilot for the build.
 
 ```mermaid
 flowchart LR
@@ -172,24 +86,7 @@ flowchart LR
     classDef gate fill:#FFF8E1,stroke:#F9A825,color:#111;
 ```
 
-The complete, auditable record is in the repository — read it to understand *why* the code is shaped the way it is, or to reproduce the work:
-
-| Document | What it contains |
-| --- | --- |
-| [`seed/seed.md`](seed/seed.md) | The original intent, in plain English |
-| [`spec/spec-R-Z7UL7V.md`](spec/spec-R-Z7UL7V.md) | Goals, use cases, functional and non-functional requirements, acceptance criteria |
-| [`plan/plan-R-Z7UL7V.md`](plan/plan-R-Z7UL7V.md) | Architecture, design, and the `W-1..W-8` work breakdown |
-| [`replay-execution/R-Z7UL7V-execution-log.md`](replay-execution/R-Z7UL7V-execution-log.md) | An append-only log of every approved step and its outcome |
-
-**Continue or extend it the same way.** Open a fresh GitHub Copilot Chat in Agent mode and paste:
-
-```text
-Read promptless-agentic-sdlc/twtty/methodology/core-twtty-methodology.md and act strictly as the AI Agent it defines.
-
-Resume the project at fake-monolith.
-```
-
-Use `Start a new release on the project at fake-monolith.` to add features; the agent reconstructs the full state from `replay-execution/` and proposes the next step. Learn more about the methodology [here](https://github.com/ajai-d/promptless-agentic-sdlc).
+The full record is in the repo: [`seed/`](seed/seed.md) · [`spec/`](spec/spec-R-Z7UL7V.md) · [`plan/`](plan/plan-R-Z7UL7V.md) · [`replay-execution/`](replay-execution/R-Z7UL7V-execution-log.md). To continue or extend it, open GitHub Copilot Chat in Agent mode and resume the project with the [methodology](https://github.com/ajai-d/promptless-agentic-sdlc).
 
 ## License
 
