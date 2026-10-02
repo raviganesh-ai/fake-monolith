@@ -156,7 +156,7 @@ Four acceptance tests cover the core behavior: the application serves its home p
 
 ## How this project was built
 
-This project was built with the **[Promptless Agentic SDLC (TWTTY)](https://github.com/ajai-d/promptless-agentic-sdlc)** — a methodology in which a developer captures intent in plain English and an AI agent proposes each step, executes only what the human approves, and records every decision. It is **spec-driven and human-governed**: the work moves through four stages, each ending in an explicit approval gate (`SEED-EXIT`, `SPEC-EXIT`, `PLAN-EXIT`, `EXECUTE-EXIT`) that a human signs off before the next stage begins.
+This project was built with the **[Promptless Agentic SDLC (TWTTY)](https://github.com/ajai-d/promptless-agentic-sdlc)** — a methodology in which a developer captures intent in plain English and an AI agent proposes each step and records every decision in an append-only log. It is **spec-driven and human-governed**: work moves through four stages, each ending in an explicit approval gate (`SEED-EXIT`, `SPEC-EXIT`, `PLAN-EXIT`, `EXECUTE-EXIT`). For this project, the developer approved the `SEED`, `SPEC`, and `PLAN` gates interactively, then authorized **Autopilot** for the build — so during `EXECUTE` the agent self-approved each step within that scope and logged every one, with high-impact actions still reserved for explicit human approval.
 
 ```mermaid
 flowchart LR
