@@ -61,7 +61,7 @@ The home page shows the seeded counts (20 customers, 30 products, 50 orders). Na
 
 ## Architecture
 
-The application is a single Spring Boot process with three clearly separated layers. A browser request enters the **web layer** (Spring MVC controllers rendering Thymeleaf pages), which delegates to the **service layer** that holds the business rules, which in turn uses the **repository layer** (Spring Data JPA) to read and write an embedded H2 database. All layers share the same JPA domain entities — a deliberate, legacy-style coupling that is part of what makes the codebase a useful modernization exercise.
+The application is a single Spring Boot process with three clearly separated tiers, shown below. Its defining characteristic is deliberate, legacy-style coupling: all tiers share the same JPA domain entities and the code is organized package-by-layer. That is exactly what makes it a realistic target for modernization exercises rather than a model of clean architecture.
 
 ```mermaid
 flowchart LR

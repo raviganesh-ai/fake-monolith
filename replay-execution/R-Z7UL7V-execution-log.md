@@ -482,3 +482,11 @@ Append-only replay-execution log for the baseline release of the `fake-monolith`
 - **Execution outcome:** Reverted the whole-README trimming; only the "How this project was built" section stays concise.
 - **Artifact / path changed:** `README.md`
 - **Notes:** Out-of-band documentation correction after EXECUTE-EXIT (024), at the Human User's direction. Entry 031 over-applied conciseness to the entire README; the Human User clarified that only the TWTTY explanation ("How this project was built") should be summary-level. Restored the full professional body — Overview, Features, Quickstart, Architecture (prose + architecture diagram + components table + technology table), Usage, Project structure, Configuration, Testing — while keeping the "How this project was built" section brief (short paragraph + gated stage diagram + one-line artifact links + one-line resume). The same revert-and-keep-TWTTY-section-brief change was applied to the TWTTY project README template, whose guidance now says to keep the product body as thorough as the project warrants and only the TWTTY section brief. Documentation only, no behavior change.
+
+### 033 · meta/backfill · —
+
+- **Timestamp:** 2026-10-02T03:55:00Z
+- **Approval outcome:** Approved with changes
+- **Execution outcome:** Removed duplication in the Architecture section (prose no longer narrates the diagram).
+- **Artifact / path changed:** `README.md`
+- **Notes:** Out-of-band documentation refinement after EXECUTE-EXIT (024), at the Human User's direction. The Architecture prose paragraph narrated the same request flow (browser → web → service → repository → H2) that the architecture diagram already shows. Rewrote the prose to carry the design rationale (single process, shared JPA entities, package-by-layer legacy coupling as a modernization target) and let the diagram show the structure/flow; the components and technology tables are kept (they add source links and tech rationale, not duplication). The TWTTY project README template's Architecture guidance was updated to instruct against narrating the diagram in prose. Documentation only, no behavior change.
