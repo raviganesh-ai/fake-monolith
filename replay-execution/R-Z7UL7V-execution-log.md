@@ -434,3 +434,11 @@ Append-only replay-execution log for the baseline release of the `fake-monolith`
 - **Execution outcome:** Post-release hosting change recorded: repository published to GitHub.
 - **Artifact / path changed:** `—`
 - **Notes:** The hosting decision recorded at 3a Setup (entry 011) was local-only git. After release completion, the Human User explicitly requested publishing to GitHub to share with others. Publishing is a hard guardrail (external exposure) and required explicit Human User approval even under Autopilot — given here. The Human User chose **private** visibility (confirmed via question). Created `ajai-d/fake-monolith` (private) with `gh repo create`, added `origin`, and pushed `main`. No tracked-file changes; this entry records the hosting-state change for traceability so the local-only note at entry 011 is not treated as drift. Corrects/updates entry 011's hosting statement.
+
+### 027 · meta/backfill · —
+
+- **Timestamp:** 2026-10-02T02:30:00Z
+- **Approval outcome:** Approved with changes
+- **Execution outcome:** Post-release README regenerated from the updated TWTTY project README template.
+- **Artifact / path changed:** `README.md`
+- **Notes:** Out-of-band documentation change after EXECUTE-EXIT (024), at the Human User's direction. The TWTTY project README template was redesigned for showcase impact (impeccable.style ethos: lead with impact + the "an AI built this, here are the receipts" story + a native Mermaid gate diagram; keep the audit deep-dive as a clearly-secondary section; disciplined visual devices). This release's `README.md` was regenerated from that new template with real values (8 work items, 26 → now more replay entries, 4 gates, 4 tests, 20/30/50 seed). No behavior change; documentation only. Hero image intentionally omitted (local-only app, no committed screenshot) per the template's degrade-gracefully guidance. References and updates entries 024 and 025.

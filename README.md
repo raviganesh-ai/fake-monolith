@@ -1,51 +1,93 @@
+<div align="center">
+
 # Fake Legacy Monolith — Order Management
 
-> A deliberately legacy-style, three-tier **Java 8 / Spring Boot 2.7** order-management monolith — server-rendered, one deployable, runs locally in Docker. Built as a fictional fixture for demos, training, and **modernization exercises**. Delivered end-to-end by an AI coding agent following the **Promptless Agentic SDLC (TWTTY)** methodology using the **baseline SDLC** specialized implementation.
+### A deliberately legacy Java 8 / Spring Boot 2.7 three-tier order-management monolith — built end-to-end by an AI, and it runs anywhere Docker runs.
 
-![Methodology](https://img.shields.io/badge/methodology-Promptless%20Agentic%20SDLC-purple)
-![Stack](https://img.shields.io/badge/stack-Java%208%20%7C%20Spring%20Boot%202.7-orange)
-![Risk level](https://img.shields.io/badge/risk%20level-1%20(prototype)-lightgrey)
+[![Built with TWTTY](https://img.shields.io/badge/built%20with-Promptless%20Agentic%20SDLC-7A3FBF)](https://github.com/ajai-d/promptless-agentic-sdlc)
+[![AI-built](https://img.shields.io/badge/code-100%25%20AI--authored-5B8DEF)](replay-execution/)
+[![Tests](https://img.shields.io/badge/tests-4%20passing-3FB950)](src/test/)
+[![Stack](https://img.shields.io/badge/stack-Java%208%20%7C%20Spring%20Boot%202.7-E8820C)](pom.xml)
+[![License](https://img.shields.io/badge/license-MIT-8B949E)](LICENSE)
 
-> **This is a throwaway demo/training fixture.** It uses only fictional data and is **not** intended for real users, real or customer data, production traffic, or long-lived operation as a real system. Its "legacy" character comes from the intentionally end-of-life framework generation and tightly coupled, package-by-layer architecture — **not** from deliberately introduced vulnerabilities.
+**[📖 The receipts](replay-execution/R-Z7UL7V-execution-log.md)** &nbsp;·&nbsp; **[🗺️ Stage diagram](replay-execution/R-Z7UL7V-execution-diagram.md)** &nbsp;·&nbsp; ⭐ Star it if the idea lands
+
+</div>
 
 ---
 
-## What it does
+## ✨ An AI built this end to end — and logged every decision
 
-A single Spring Boot process lets an internal **operations employee** manage **customers, products, inventory, and orders** through server-rendered browser pages. Core business rules are enforced in a service layer: stock validation on order placement, order-total calculation, order-status transitions, and cancel-restock.
+No human wrote the code. A developer described the intent in plain English in [`seed/seed.md`](seed/seed.md); an AI agent following the **Promptless Agentic SDLC (TWTTY)** then drove **specification → planning → implementation → testing → containerization**, pausing for human approval at every stage-exit gate. No per-task prompts were hand-authored — the whole build is one bootstrap prompt.
 
-All three tiers — Spring MVC presentation, service-layer business logic, and Spring Data JPA data access — live in **one codebase** and ship as **one deployable**, backed by an embedded in-memory H2 database that re-seeds fictional sample data on every startup.
+The difference from "AI slop": **every decision is recorded and replayable.**
 
-## Try it locally (Docker only)
+`🤖 100% AI-authored` &nbsp;·&nbsp; `🚦 4/4 gates cleared` &nbsp;·&nbsp; `📦 8 work items` &nbsp;·&nbsp; `🧾 26 replay entries` &nbsp;·&nbsp; `✅ 4 tests passing`
 
-> **The only thing you need installed is Docker** (Docker Desktop or a compatible engine). Java 8, Maven, and every dependency are downloaded and run *inside* the container build — nothing is installed on your host.
+> Skeptical? Read the append-only [`replay-execution/R-Z7UL7V-execution-log.md`](replay-execution/R-Z7UL7V-execution-log.md) — the approved prompt and outcome for every single step — or the visual [stage/gate diagram](replay-execution/R-Z7UL7V-execution-diagram.md).
 
-From the project folder's root:
+## 🎯 What it does
+
+A single Spring Boot process lets an internal operations employee manage **customers, products, inventory, and orders** through server-rendered browser pages. The business rules live in a service layer: stock validation on order placement, order-total calculation, order-status transitions (`NEW → CONFIRMED → SHIPPED`, or cancel), and cancel-restock. All three tiers — Spring MVC presentation, service-layer logic, and Spring Data JPA persistence — live in one codebase and ship as one deployable, backed by an embedded in-memory H2 database that re-seeds fictional data on every start.
+
+> **It's a throwaway fixture, on purpose.** Fictional data only; not intended for real users, real data, or production. Its "legacy" character comes from the intentionally end-of-life framework generation and tight, package-by-layer coupling — a realistic target for **modernization exercises**, not a pile of planted vulnerabilities.
+
+**Try, for example:**
+
+> Add a product, set its stock, then place an order for it — watch the stock validate and the totals compute.
+>
+> Cancel an order and watch its items return to stock.
+>
+> Browse the ~50 seeded orders and step one through its status transitions.
+
+## 🚀 Try it in 2 minutes
+
+**Docker is the only thing you need installed.** Java 8 and Maven run *inside* the container build.
 
 ```powershell
-docker compose up --build    # build the image and start the app
-# first run pulls base images and downloads dependencies (a few minutes); later runs are fast
-# then open http://localhost:8080
+git clone https://github.com/ajai-d/fake-monolith.git
+cd fake-monolith
+docker compose up --build    # first run pulls images + deps (a few minutes); open http://localhost:8080
 docker compose down          # stop and remove the container
 ```
 
-The data is fictional and held in memory, so it resets every time the app restarts.
+The home page shows the seeded counts (20 customers, 30 products, 50 orders). Data is in-memory, so it resets on every restart.
 
-## How this was built
+## 🤖 How an AI built this — the receipts
 
-This fixture was delivered end-to-end by an AI coding agent following the **Promptless Agentic SDLC (TWTTY)** methodology, baseline **SDLC** implementation. The intent was captured in plain English in [`seed/seed.md`](seed/seed.md); the agent then drove specification, planning, and implementation, checking with the human at each stage-exit gate.
+The build ran as four human-gated stages. Each gate was explicitly approved; each artifact is in the repo.
 
-Every decision is recorded in an append-only replay-execution log that any future contributor (or AI agent) can read to understand or reproduce the release:
+```mermaid
+flowchart LR
+    seed["SEED<br/>human intent"]:::actor --> spec["SPEC<br/>requirements and ACs"]:::compute
+    spec --> plan["PLAN<br/>architecture and work breakdown"]:::compute
+    plan --> exec["EXECUTE<br/>build, test, ship"]:::compute
+    seed -.->|SEED-EXIT| g1(("✓")):::gate
+    spec -.->|SPEC-EXIT| g2(("✓")):::gate
+    plan -.->|PLAN-EXIT| g3(("✓")):::gate
+    exec -.->|EXECUTE-EXIT| g4(("✓")):::gate
+    classDef actor fill:#E3F2FD,stroke:#1565C0,color:#111;
+    classDef compute fill:#E8F5E9,stroke:#2E7D32,color:#111;
+    classDef gate fill:#FFF8E1,stroke:#F9A825,color:#111;
+```
 
-- [`seed/seed.md`](seed/seed.md) — human intent (SEED)
-- [`spec/spec-R-Z7UL7V.md`](spec/spec-R-Z7UL7V.md) — requirements, use cases, acceptance criteria (SPEC)
-- [`plan/plan-R-Z7UL7V.md`](plan/plan-R-Z7UL7V.md) — architecture, design, W-1…W-8 work breakdown (PLAN)
-- [`replay-execution/R-Z7UL7V-execution-log.md`](replay-execution/R-Z7UL7V-execution-log.md) — append-only log of every approved step
-- [`replay-execution/R-Z7UL7V-execution-diagram.md`](replay-execution/R-Z7UL7V-execution-diagram.md) — visual summary of the stages and gates
+**The canonical artifacts — read these to understand (or reproduce) the project:**
+
+| Stage | Artifact | What's in it |
+| --- | --- | --- |
+| SEED | [`seed/seed.md`](seed/seed.md) | The human's plain-English intent |
+| SPEC | [`spec/spec-R-Z7UL7V.md`](spec/spec-R-Z7UL7V.md) | Goals, use cases, FR / NFR / acceptance criteria, data classification |
+| PLAN | [`plan/plan-R-Z7UL7V.md`](plan/plan-R-Z7UL7V.md) | Architecture, design, `W-1..W-8` work breakdown |
+| EXECUTE | [`replay-execution/R-Z7UL7V-execution-log.md`](replay-execution/R-Z7UL7V-execution-log.md) | Append-only log of every approved prompt + outcome |
+| — | [`replay-execution/R-Z7UL7V-execution-diagram.md`](replay-execution/R-Z7UL7V-execution-diagram.md) | The stages and gates, visualized |
+
+**Want to build your own this way?** The whole agentic implementation is a single bootstrap prompt — see the [Promptless Agentic SDLC methodology](https://github.com/ajai-d/promptless-agentic-sdlc).
 
 ---
 
-# Deep dive: what's inside
+# 🔬 Deep dive <sub>(for reviewers and contributors)</sub>
+
+> Everything below is the engineering detail — architecture, every subsystem, every control, and how to run and test it yourself. Skip it unless you're evaluating the implementation.
 
 ## Architecture
 
@@ -64,61 +106,103 @@ flowchart TD
     classDef data fill:#F3E5F5,stroke:#6A1B9A,color:#111;
 ```
 
-Three tiers, one deployable: a Spring MVC presentation tier renders Thymeleaf pages; a service tier holds the business rules; a Spring Data JPA tier persists to an embedded in-memory H2 database that re-seeds on every startup. All layers share the same JPA entities — intentional legacy coupling, and a realistic modernization-exercise target.
+Three tiers, one deployable, shared JPA entities across all layers — intentional legacy coupling, and a realistic modernization-exercise target.
 
-## What was implemented
+## What was actually implemented
 
-| Area | Source | Highlights |
-| --- | --- | --- |
-| Domain model | [`domain/`](src/main/java/com/example/monolith/domain) | `Customer`, `Product` (with `quantityOnHand`), `Order` (table `orders`), `OrderItem` (frozen `unitPriceAtOrder`), `OrderStatus` enum |
-| Repositories | [`repository/`](src/main/java/com/example/monolith/repository) | Spring Data JPA; `ProductRepository.findBySku` |
-| Services | [`service/`](src/main/java/com/example/monolith/service) | Transactional order placement (combine duplicate lines, validate stock, compute totals, decrement), SKU uniqueness, non-negative price/stock, status transitions, cancel-restock |
-| Web | [`web/`](src/main/java/com/example/monolith/web) | Controllers for customers, products, inventory, orders; `GlobalExceptionHandler` 404 page; inline validation |
-| Views | [`templates/`](src/main/resources/templates) | Server-rendered Thymeleaf pages + plain CSS, no JS framework |
-| Seed data | [`DataInitializer.java`](src/main/java/com/example/monolith/init/DataInitializer.java) | ~20 customers, 30 products, 50 orders of fictional data at startup |
-| Tests | [`OrderManagementAcceptanceTests.java`](src/test/java/com/example/monolith/OrderManagementAcceptanceTests.java) | AC-1…AC-4 (home 200, order totals/stock, over-stock rollback, cancel-restock) |
-| Container | [`Dockerfile`](Dockerfile), [`docker-compose.yml`](docker-compose.yml) | Multi-stage (Maven+JDK8 build → JRE8 runtime), non-root user, pinned images, port 8080 |
+### 1. Web layer
 
-## Controls (what Level 1 applied)
+Server-rendered Spring MVC controllers and Thymeleaf views for every workflow. Source: [`web/`](src/main/java/com/example/monolith/web).
+
+- Controllers for customers, products, inventory, and orders; a `HomeController` dashboard.
+- `GlobalExceptionHandler` renders a friendly 404 and never leaks stack traces.
+- Inline form validation (re-render with field messages), plain CSS, no JS framework.
+
+### 2. Service layer
+
+The business rules, transactional. Source: [`service/`](src/main/java/com/example/monolith/service).
+
+- `OrderService.placeOrder` — all-or-nothing: combines duplicate lines, validates stock, computes line + order totals, decrements stock.
+- Order status machine with cancel-restock; `ProductService` enforces unique SKU and non-negative price/stock.
+
+### 3. Domain + persistence
+
+Shared entities and JPA repositories. Source: [`domain/`](src/main/java/com/example/monolith/domain) · [`repository/`](src/main/java/com/example/monolith/repository).
+
+- `Customer`, `Product` (with `quantityOnHand`), `Order` (table `orders`), `OrderItem` (frozen `unitPriceAtOrder`), `OrderStatus` enum.
+- Spring Data JPA repositories; `findBySku` for uniqueness checks.
+
+### 4. Data initializer
+
+Seeds fictional data at startup. Source: [`DataInitializer.java`](src/main/java/com/example/monolith/init/DataInitializer.java).
+
+- ~20 customers, 30 products, 50 orders; deterministic (seeded RNG); idempotent.
+
+### 5. Containerization
+
+Local-first, nothing on the host. Source: [`Dockerfile`](Dockerfile) · [`docker-compose.yml`](docker-compose.yml).
+
+- Multi-stage: Maven + JDK 8 build → JRE 8 runtime; non-root user; pinned base images; port 8080 only.
+
+## Every control in one table
 
 | Control | Where | Value |
 | --- | --- | --- |
-| Acceptance tests | `src/test/...` | 4 tests, all passing (AC-1…AC-4) |
-| Secret scan | 3d (replay log entry 021) | No findings (incl. `replay-execution/`) |
+| Acceptance tests | [`src/test/`](src/test/java/com/example/monolith/OrderManagementAcceptanceTests.java) | 4 passing (AC-1…AC-4) |
+| Secret scan | replay entry 021 | No findings (incl. `replay-execution/`) |
 | Non-root container | `Dockerfile` | `appuser` uid 1001 |
 | Pinned base images | `Dockerfile` | `maven:3.9-eclipse-temurin-8`, `eclipse-temurin:8-jre` |
 | Single published port | `docker-compose.yml` | `8080:8080` |
 | Branch-and-PR integration | git | Work on `W-1-app`, merged `--no-ff` to `main` |
-| Append-only replay log | `replay-execution/` | Every approved step recorded |
+| Append-only replay log | `replay-execution/` | 26 entries, every decision recorded |
 
-Note (Level 1 reductions, by design): no CI/CD, no code review, no SAST/dependency/license scanning, no threat modeling, and accessibility is a non-tested design target. See the spec and replay log for the recorded acknowledgments.
+> **Level 1 (prototype) reductions, by design:** no CI/CD, code review, SAST/dependency/license scanning, or threat modeling; accessibility is a non-tested design target. The acknowledgments are recorded in the [spec](spec/spec-R-Z7UL7V.md) and [replay log](replay-execution/R-Z7UL7V-execution-log.md).
 
-## The R-Z7UL7V result
+## The R-Z7UL7V result <sub>(by the numbers)</sub>
 
 - **8 work items** shipped across `SEED → SPEC → PLAN → EXECUTE`
-- **4 macro gates cleared** — SEED-EXIT, SPEC-EXIT, PLAN-EXIT, EXECUTE-EXIT
-- **4 tests, 4 passing** (AC-1…AC-4)
-- **Seed data**: 20 customers / 30 products / 50 orders, verified live
-- **Runs locally**: `docker compose up --build` → HTTP 200 at `http://localhost:8080`
+- **26 replay-log entries** — every decision with its approved prompt and outcome
+- **4 macro gates cleared** — SEED-EXIT · SPEC-EXIT · PLAN-EXIT · EXECUTE-EXIT
+- **4 tests passing** (AC-1…AC-4); no coverage floor at Level 1
+- **Seed data:** 20 customers / 30 products / 50 orders, verified live
+- **Runs locally:** `docker compose up --build` → HTTP 200 at `http://localhost:8080`
 
-## Clone and run
+## 🧭 Clone and run
 
-Prerequisite: **Docker** (Docker Desktop or compatible). Nothing else — Java 8 and Maven run inside the build.
+### Prerequisites
+
+**Docker** (Docker Desktop or a compatible engine). Nothing else — Java 8, Maven, and all dependencies run inside the container build.
+
+### Run it
 
 ```powershell
-docker compose up --build    # build + start; open http://localhost:8080
-docker compose down          # stop + remove containers
+git clone https://github.com/ajai-d/fake-monolith.git
+cd fake-monolith
+docker compose up --build    # open http://localhost:8080
+docker compose down
 ```
 
-Run the tests (in the Maven container, off your host):
+### Verify
+
+Open `http://localhost:8080` (home shows seeded counts), then walk a flow: create a customer → add a product → set stock → place an order → cancel it and confirm the stock returns.
+
+### Run the tests
+
+The suite runs inside the Maven container, so you still install nothing:
 
 ```powershell
 docker run --rm -v ${PWD}:/app -w /app maven:3.9-eclipse-temurin-8 mvn test
 ```
 
-## Continue with TWTTY
+Covers AC-1 (app serves), AC-2 (order totals + stock decrement), AC-3 (over-stock rejected transactionally), AC-4 (cancel restocks).
 
-This project was built with the **Promptless Agentic SDLC (TWTTY)**. To resume or extend it, open a fresh agent chat and point it at the methodology:
+---
+
+## 🔁 Continue with TWTTY
+
+Pick up where the agent left off, ship a new release, or hand off to a colleague — all against the append-only replay log as ground truth.
+
+**Resume the current release** (already at `EXECUTE-EXIT`, so this will report completion). Open a fresh GitHub Copilot Chat in **Agent mode** and paste:
 
 ```text
 Read promptless-agentic-sdlc/twtty/methodology/core-twtty-methodology.md and act strictly as the AI Agent it defines.
@@ -126,9 +210,16 @@ Read promptless-agentic-sdlc/twtty/methodology/core-twtty-methodology.md and act
 Resume the project at fake-monolith.
 ```
 
-To start a new release once this one is complete, replace "Resume" with "Start a new release on". The agent reads [`replay-execution/R-Z7UL7V-execution-log.md`](replay-execution/R-Z7UL7V-execution-log.md) to recover exactly where things stand.
+**Start a new release** (e.g., add auth, a REST API, or persistence):
+
+```text
+Read promptless-agentic-sdlc/twtty/methodology/core-twtty-methodology.md and act strictly as the AI Agent it defines.
+
+Start a new release on the project at fake-monolith.
+```
+
+The agent reads every `R*-execution-log*.md` in `replay-execution/`, finds the last approved entry, tells you exactly where things stand, and proposes the next step. A new release reuses the seed and produces a delta spec and plan.
 
 ## License
 
 MIT — see [LICENSE](LICENSE).
-
