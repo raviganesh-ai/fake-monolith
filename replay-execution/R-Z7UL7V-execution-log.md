@@ -442,3 +442,11 @@ Append-only replay-execution log for the baseline release of the `fake-monolith`
 - **Execution outcome:** Post-release README regenerated from the updated TWTTY project README template.
 - **Artifact / path changed:** `README.md`
 - **Notes:** Out-of-band documentation change after EXECUTE-EXIT (024), at the Human User's direction. The TWTTY project README template was redesigned for showcase impact (impeccable.style ethos: lead with impact + the "an AI built this, here are the receipts" story + a native Mermaid gate diagram; keep the audit deep-dive as a clearly-secondary section; disciplined visual devices). This release's `README.md` was regenerated from that new template with real values (8 work items, 26 → now more replay entries, 4 gates, 4 tests, 20/30/50 seed). No behavior change; documentation only. Hero image intentionally omitted (local-only app, no committed screenshot) per the template's degrade-gracefully guidance. References and updates entries 024 and 025.
+
+### 028 · meta/backfill · —
+
+- **Timestamp:** 2026-10-02T02:50:00Z
+- **Approval outcome:** Approved with changes
+- **Execution outcome:** README restructured to a professional, product-first layout.
+- **Artifact / path changed:** `README.md`
+- **Notes:** Out-of-band documentation change after EXECUTE-EXIT (024), at the Human User's direction (superseding entry 027). The TWTTY project README template was redesigned again to be a professional, product-first README rather than a methodology advertisement: a reader can understand the application, its architecture, and how to run it in one pass. Removed the "100% AI-authored" framing and the "receipts" hero hook; TWTTY is now a single tasteful attribution line near the top linking to a dedicated "How this project was built" section at the end. Added Overview, Features, Architecture (diagram + components table + technology table), Quickstart, Usage, Project structure, Configuration, and Testing sections. This release's README was regenerated from the new template with real values; documentation only, no behavior change.
