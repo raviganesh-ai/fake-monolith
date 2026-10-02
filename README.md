@@ -2,10 +2,10 @@
 
 # Order Management Monolith
 
-#### A three-tier Java 8 / Spring Boot 2.7 order-management application — server-rendered, self-contained, and runnable with a single Docker command.
+#### A three-tier Java 11 / Spring Boot 2.7 order-management application — server-rendered, self-contained, and runnable with a single Docker command.
 
 [![Tests](https://img.shields.io/badge/tests-4%20passing-3FB950)](src/test/)
-[![Stack](https://img.shields.io/badge/stack-Java%208%20%7C%20Spring%20Boot%202.7-E8820C)](pom.xml)
+[![Stack](https://img.shields.io/badge/stack-Java%2011%20%7C%20Spring%20Boot%202.7-E8820C)](pom.xml)
 [![License](https://img.shields.io/badge/license-MIT-8B949E)](LICENSE)
 [![Built with TWTTY](https://img.shields.io/badge/built%20with-Promptless%20Agentic%20SDLC-7A3FBF)](#how-this-project-was-built)
 
@@ -39,7 +39,7 @@ It is deliberately built in a **legacy three-tier style** (Spring MVC + Thymelea
 
 ### Prerequisites
 
-**Docker** (Docker Desktop or a compatible engine) is the only requirement. Java 8, Maven, and all dependencies run inside the container build — nothing is installed on your host.
+**Docker** (Docker Desktop or a compatible engine) is the only requirement. Java 11, Maven, and all dependencies run inside the container build — nothing is installed on your host.
 
 ```powershell
 docker --version    # verify Docker is installed and running
@@ -78,7 +78,7 @@ flowchart LR
     classDef data fill:#F3E5F5,stroke:#6A1B9A,color:#111;
 ```
 
-**Stack:** Java 8 · Spring Boot 2.7 · Spring MVC + Thymeleaf · Spring Data JPA · H2 (in-memory) · Maven · Docker.
+**Stack:** Java 11 · Spring Boot 2.7 · Spring MVC + Thymeleaf · Spring Data JPA · H2 (in-memory) · Maven · Docker.
 
 The authoritative architecture — the full component breakdown, design decisions, and technology rationale — lives in the plan, [`plan/plan-R-Z7UL7V.md`](plan/plan-R-Z7UL7V.md), which is maintained as the single source of truth.
 
@@ -131,7 +131,7 @@ Configuration lives in [`src/main/resources/application.properties`](src/main/re
 The test suite runs inside the Maven container, so you still install nothing:
 
 ```powershell
-docker run --rm -v ${PWD}:/app -w /app maven:3.9-eclipse-temurin-8 mvn test
+docker run --rm -v ${PWD}:/app -w /app maven:3.9-eclipse-temurin-11 mvn test
 ```
 
 Four acceptance tests cover the core behavior: the application serves its home page; placing a valid order decrements stock and computes totals; an over-stock order is rejected transactionally; and cancelling an order restocks its items.
