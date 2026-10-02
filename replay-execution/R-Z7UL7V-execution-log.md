@@ -426,3 +426,11 @@ Append-only replay-execution log for the baseline release of the `fake-monolith`
 - **Execution outcome:** Post-release README correction recorded to avoid drift.
 - **Artifact / path changed:** `README.md`
 - **Notes:** Out-of-band change after EXECUTE-EXIT (024), at the Human User's request to confirm the README fully documents local build/run without installing anything. Corrects the "Try it locally" section: removed a stale parenthetical ("Build/run wiring is delivered by work item W-8 during EXECUTE; see the plan") that was written at 3a Setup before W-8 existed and became misleading once the container shipped; clarified that Docker is the only host prerequisite and that Java/Maven/dependencies run inside the build; added first-build-time and in-memory-data-reset notes. Documentation-only clarification of the already-delivered artifact; no behavior change. References and corrects entry 024. Auto-approved under Autopilot (per R-Z7UL7V-012); substantive changes would instead warrant a new Release Scope.
+
+### 026 · meta/backfill · —
+
+- **Timestamp:** 2026-10-02T00:12:00Z
+- **Approval outcome:** Approved with changes
+- **Execution outcome:** Post-release hosting change recorded: repository published to GitHub.
+- **Artifact / path changed:** `—`
+- **Notes:** The hosting decision recorded at 3a Setup (entry 011) was local-only git. After release completion, the Human User explicitly requested publishing to GitHub to share with others. Publishing is a hard guardrail (external exposure) and required explicit Human User approval even under Autopilot — given here. The Human User chose **private** visibility (confirmed via question). Created `ajai-d/fake-monolith` (private) with `gh repo create`, added `origin`, and pushed `main`. No tracked-file changes; this entry records the hosting-state change for traceability so the local-only note at entry 011 is not treated as drift. Corrects/updates entry 011's hosting statement.
