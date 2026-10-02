@@ -474,3 +474,11 @@ Append-only replay-execution log for the baseline release of the `fake-monolith`
 - **Execution outcome:** README condensed to a concise, summary-level document.
 - **Artifact / path changed:** `README.md`
 - **Notes:** Out-of-band documentation refinement after EXECUTE-EXIT (024), at the Human User's direction. Shortened the README to roughly half its length: folded the feature list into Overview, replaced the components and technology tables with a one-line Stack summary (the architecture diagram already conveys the components), and removed the Project structure and Configuration sections. Kept Overview, Quickstart, Architecture (with diagram), Usage, Testing, and a concise "How this project was built" with the gated stage diagram. The same conciseness pass and guidance were applied to the TWTTY project README template in the methodology repository. Documentation only, no behavior change.
+
+### 032 · meta/backfill · —
+
+- **Timestamp:** 2026-10-02T03:45:00Z
+- **Approval outcome:** Approved with changes
+- **Execution outcome:** Reverted the whole-README trimming; only the "How this project was built" section stays concise.
+- **Artifact / path changed:** `README.md`
+- **Notes:** Out-of-band documentation correction after EXECUTE-EXIT (024), at the Human User's direction. Entry 031 over-applied conciseness to the entire README; the Human User clarified that only the TWTTY explanation ("How this project was built") should be summary-level. Restored the full professional body — Overview, Features, Quickstart, Architecture (prose + architecture diagram + components table + technology table), Usage, Project structure, Configuration, Testing — while keeping the "How this project was built" section brief (short paragraph + gated stage diagram + one-line artifact links + one-line resume). The same revert-and-keep-TWTTY-section-brief change was applied to the TWTTY project README template, whose guidance now says to keep the product body as thorough as the project warrants and only the TWTTY section brief. Documentation only, no behavior change.
