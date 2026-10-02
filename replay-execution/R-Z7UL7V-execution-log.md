@@ -305,3 +305,116 @@ Append-only replay-execution log for the baseline release of the `fake-monolith`
 - **Execution outcome:** autopilot enabled
 - **Artifact / path changed:** `—`
 - **Notes:** Authorized scope: **EXECUTE** for release R-Z7UL7V — stage tasks 3b, 3d (secret-scan), 3f, 3m, and the added container packaging (W-8), across work items W-1 through W-8. Constraints: local-only, no cloud, no incurred cost, no production exposure. **Human anchor:** this entry is recorded in a git commit authored by the authorizing Human User, ajai-d <ajai-d@outlook.com>; at Level 1 the accepted evidence is commit authorship (verified-signature or platform-authenticated PR approval is required only at L3+). Hard guardrails remain enforced and still require explicit Human User approval even under Autopilot: any Escalate, Refine-cycle exhaustion, trust-boundary crossing, irreversible/cost-incurring action, or first exposure to real users/data — none expected in this local-only release. Revocable at any time ("Stop"/"Interactive"). Subsequent self-approved gates will carry the attribution "Auto-approved under Autopilot (per R-Z7UL7V-012)".
+
+### 013 · execute/3b/W-1 · —
+
+- **Timestamp:** 2026-10-02T00:00:10Z
+- **Approval outcome:** Approved
+- **Execution outcome:** W-1 scaffolding/config delivered on branch W-1-app (see br-W-1-app-002). Compiles.
+- **Artifact / path changed:** `pom.xml`, `src/main/java/com/example/monolith/Application.java`, `src/main/resources/application.properties`
+- **Notes:** Branch-log evidence: `replay-execution/branches/R-Z7UL7V-W-1-app-execution-log.md` entry br-W-1-app-002. Auto-approved under Autopilot (per R-Z7UL7V-012).
+
+### 014 · execute/3b/W-2 · —
+
+- **Timestamp:** 2026-10-02T00:00:20Z
+- **Approval outcome:** Approved
+- **Execution outcome:** W-2 domain model (Customer, Product, Order, OrderItem, OrderStatus) delivered (see br-W-1-app-003).
+- **Artifact / path changed:** `src/main/java/com/example/monolith/domain/*`
+- **Notes:** Branch-log evidence: br-W-1-app-003. Auto-approved under Autopilot (per R-Z7UL7V-012).
+
+### 015 · execute/3b/W-3 · —
+
+- **Timestamp:** 2026-10-02T00:00:30Z
+- **Approval outcome:** Approved
+- **Execution outcome:** W-3 repository layer delivered (see br-W-1-app-004).
+- **Artifact / path changed:** `src/main/java/com/example/monolith/repository/*`
+- **Notes:** Branch-log evidence: br-W-1-app-004. Auto-approved under Autopilot (per R-Z7UL7V-012).
+
+### 016 · execute/3b/W-4 · —
+
+- **Timestamp:** 2026-10-02T00:00:40Z
+- **Approval outcome:** Approved
+- **Execution outcome:** W-4 service layer with business rules delivered (see br-W-1-app-005).
+- **Artifact / path changed:** `src/main/java/com/example/monolith/service/*`
+- **Notes:** Branch-log evidence: br-W-1-app-005. Auto-approved under Autopilot (per R-Z7UL7V-012).
+
+### 017 · execute/3b/W-5 · —
+
+- **Timestamp:** 2026-10-02T00:00:50Z
+- **Approval outcome:** Approved
+- **Execution outcome:** W-5 web layer (controllers, Thymeleaf templates, CSS, 404 handler) delivered (see br-W-1-app-006).
+- **Artifact / path changed:** `src/main/java/com/example/monolith/web/*`, `src/main/resources/templates/**`, `src/main/resources/static/css/style.css`
+- **Notes:** Branch-log evidence: br-W-1-app-006. Auto-approved under Autopilot (per R-Z7UL7V-012).
+
+### 018 · execute/3b/W-6 · —
+
+- **Timestamp:** 2026-10-02T00:01:00Z
+- **Approval outcome:** Approved
+- **Execution outcome:** W-6 data initializer delivered; verified live (20/30/50 seeded) (see br-W-1-app-007).
+- **Artifact / path changed:** `src/main/java/com/example/monolith/init/DataInitializer.java`
+- **Notes:** Branch-log evidence: br-W-1-app-007. Auto-approved under Autopilot (per R-Z7UL7V-012).
+
+### 019 · execute/3b/W-7 · —
+
+- **Timestamp:** 2026-10-02T00:01:10Z
+- **Approval outcome:** Approved
+- **Execution outcome:** W-7 acceptance test code (AC-1..AC-4) written (see br-W-1-app-010 for the run result).
+- **Artifact / path changed:** `src/test/java/com/example/monolith/OrderManagementAcceptanceTests.java`
+- **Notes:** Branch-log evidence: br-W-1-app-010. Auto-approved under Autopilot (per R-Z7UL7V-012).
+
+### 020 · execute/3b/W-8 · —
+
+- **Timestamp:** 2026-10-02T00:01:20Z
+- **Approval outcome:** Approved
+- **Execution outcome:** W-8 containerization (multi-stage Dockerfile, Compose, .dockerignore) delivered; image builds, container serves HTTP 200, teardown verified (see br-W-1-app-008).
+- **Artifact / path changed:** `Dockerfile`, `docker-compose.yml`, `.dockerignore`
+- **Notes:** Branch-log evidence: br-W-1-app-008. Auto-approved under Autopilot (per R-Z7UL7V-012).
+
+### 021 · execute/3d · —
+
+- **Timestamp:** 2026-10-02T00:01:30Z
+- **Approval outcome:** Approved
+- **Execution outcome:** Secret scan (L1) over the full delivery including replay-execution/: no secret-like findings (see br-W-1-app-009).
+- **Artifact / path changed:** `—`
+- **Notes:** Covers W-1..W-8. Branch-log evidence: br-W-1-app-009. Auto-approved under Autopilot (per R-Z7UL7V-012).
+
+### 022 · execute/3f/W-7 · —
+
+- **Timestamp:** 2026-10-02T00:01:40Z
+- **Approval outcome:** Approved
+- **Execution outcome:** Acceptance suite run: Tests run 4, Failures 0, Errors 0. **AC-1 PASS, AC-2 PASS, AC-3 PASS, AC-4 PASS** (see br-W-1-app-010).
+- **Artifact / path changed:** `src/test/java/com/example/monolith/OrderManagementAcceptanceTests.java`
+- **Notes:** Satisfies AC-1..AC-4 (EXECUTE-EXIT condition 2). Per the SPEC-recorded minimal-testing decision, testing is scoped to this AC suite. Branch-log evidence: br-W-1-app-010. Auto-approved under Autopilot (per R-Z7UL7V-012).
+
+### 023 · meta/branch-integrated · —
+
+- **Timestamp:** 2026-10-02T00:02:00Z
+- **Approval outcome:** Approved
+- **Execution outcome:** branch integrated
+- **Artifact / path changed:** `replay-execution/branches/R-Z7UL7V-W-1-app-execution-log.md`
+- **Notes:** Delivered W-1..W-8. Full branch name W-1-app. Validated delivery commit b9c3e10 (from meta/branch-close br-W-1-app-011); source branch tip 6da6c9f observed before integration; resulting default-branch commit 42e4a31; integration method merge (--no-ff); no remote (local-only). Post-integration validation: tree matches; branch log archived on main. Relied-upon branch entries: br-W-1-app-002 through br-W-1-app-011. Auto-approved under Autopilot (per R-Z7UL7V-012).
+
+### 024 · execute/3m · EXECUTE-EXIT
+
+- **Timestamp:** 2026-10-02T00:05:00Z
+- **Approval outcome:** Approved
+- **Approved prompt:**
+
+  ```
+  Goal: Close the release at EXECUTE-EXIT for R-Z7UL7V.
+  Scope: EXECUTE stage task 3m (Iteration/closeout); baseline sdlc §3.4.
+  Inputs: the merged implementation (W-1..W-8), test results, and the §7.1 L1 matrix.
+  Action: Complete the README deeper sections, ensure the release-execution diagram
+  and state summary are current, verify the six EXECUTE-EXIT conditions and the L1
+  MUST matrix rows, and record closeout.
+  Expected output: EXECUTE-EXIT recorded; release complete.
+  Acceptance criteria: conditions 1-6 hold; L1 MUST rows satisfied or attested.
+  Tools/integrations: local filesystem writes, git, replay-log append. No external
+  services.
+  ```
+
+- **Execution outcome:** Release R-Z7UL7V complete. EXECUTE-EXIT conditions verified: (1) W-1..W-8 each have an execute/3b entry; (2) AC-1..AC-4 all referenced by execute/3f/W-7 as passing; (3) applicable L1 per-item sub-stages present (3b all items; 3d repo-wide; 3f = AC suite per the recorded minimal-testing decision); (4) release-level execute/3a present (3k/3l N/A at L1); (5) L1 MUST matrix rows satisfied; (6) self-approved under Autopilot.
+- **Artifact / path changed:** `README.md`
+  `replay-execution/R-Z7UL7V-execution-diagram.md`
+  `replay-execution/state.md`
+- **Notes:** L1 §7.1 MUST-row attestation: secret scanning done, no Critical/any findings; every AC has an AC-ID-referencing test; tests independently runnable; tool/dependency output treated as untrusted; no trust-boundary customization surfaces used (no MCP/hooks); replay-execution scanned for secrets/PII (clean); data classification/PII/retention declared in spec §14; encryption-in-transit = loopback-only (no network boundary); .gitignore/LICENSE/README present and README completed from the template. Build: `mvn package` SUCCESS, 4/4 tests. Live: container serves HTTP 200, seed 20/30/50, `docker compose down` clean. Showcase submission: not offered interactively (Autopilot, local fixture); may be revisited. Auto-approved under Autopilot (per R-Z7UL7V-012).
