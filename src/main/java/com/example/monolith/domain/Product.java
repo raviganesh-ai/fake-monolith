@@ -1,15 +1,12 @@
 package com.example.monolith.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.math.BigDecimal;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 /**
- * A product in the catalog. Stock is modeled as a single quantityOnHand field
- * (no warehouses or locations) per the spec.
+ * Product entity for the product-module (catalog and inventory).
  */
 @Entity
 public class Product {
@@ -18,45 +15,24 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
-    private String sku;
-
-    @Column(nullable = false)
     private String name;
 
-    private String description;
+    private double price;
 
-    @Column(nullable = false)
-    private BigDecimal unitPrice;
+    private int quantityInStock;
 
-    @Column(nullable = false)
-    private int quantityOnHand;
-
-    public Product() {
+    protected Product() {
+        // JPA
     }
 
-    public Product(String sku, String name, String description, BigDecimal unitPrice, int quantityOnHand) {
-        this.sku = sku;
+    public Product(String name, double price, int quantityInStock) {
         this.name = name;
-        this.description = description;
-        this.unitPrice = unitPrice;
-        this.quantityOnHand = quantityOnHand;
+        this.price = price;
+        this.quantityInStock = quantityInStock;
     }
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getSku() {
-        return sku;
-    }
-
-    public void setSku(String sku) {
-        this.sku = sku;
     }
 
     public String getName() {
@@ -67,27 +43,27 @@ public class Product {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    public double getPrice() {
+        return price;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setPrice(double price) {
+        this.price = price;
     }
 
-    public BigDecimal getUnitPrice() {
-        return unitPrice;
+    public int getQuantityInStock() {
+        return quantityInStock;
     }
 
-    public void setUnitPrice(BigDecimal unitPrice) {
-        this.unitPrice = unitPrice;
+    public void setQuantityInStock(int quantityInStock) {
+        this.quantityInStock = quantityInStock;
     }
 
-    public int getQuantityOnHand() {
-        return quantityOnHand;
+    public void decreaseStock(int quantity) {
+        this.quantityInStock -= quantity;
     }
 
-    public void setQuantityOnHand(int quantityOnHand) {
-        this.quantityOnHand = quantityOnHand;
+    public boolean hasSufficientStock(int requestedQuantity) {
+        return this.quantityInStock >= requestedQuantity;
     }
 }

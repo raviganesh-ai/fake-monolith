@@ -1,12 +1,12 @@
 package com.example.monolith.service;
 
 /**
- * A single requested order line (product plus quantity), used as input to
- * OrderService.placeOrder.
+ * Input model used by the web-module to describe a requested order line.
  */
 public class OrderLineRequest {
 
     private Long productId;
+
     private int quantity;
 
     public OrderLineRequest() {

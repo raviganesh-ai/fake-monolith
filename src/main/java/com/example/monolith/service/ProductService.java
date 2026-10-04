@@ -5,11 +5,13 @@ import com.example.monolith.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
+/**
+ * Product & inventory-module service encapsulating catalog and stock rules.
+ */
 @Service
+@Transactional
 public class ProductService {
 
     private final ProductRepository productRepository;
@@ -22,50 +24,30 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public Product getById(Long id) {
+    public Product findById(Long id) {
         return productRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Product " + id + " not found"));
+                .orElseThrow(() -> new NotFoundException("Product not found: " + id));
     }
 
-    /**
-     * Creates a new product (id null) or updates an existing one. Enforces a
-     * non-negative price and a unique SKU.
-     */
-    @Transactional
-    public Product save(Long id, String sku, String name, String description, BigDecimal unitPrice) {
-        if (sku == null || sku.trim().isEmpty()) {
-            throw new BusinessRuleException("SKU is required");
-        }
-        if (name == null || name.trim().isEmpty()) {
+    public Product create(String name, double price, int quantityInStock) {
+        if (name == null || name.isBlank()) {
             throw new BusinessRuleException("Product name is required");
         }
-        if (unitPrice == null || unitPrice.signum() < 0) {
-            throw new BusinessRuleException("Price must be zero or greater");
+        if (price < 0) {
+            throw new BusinessRuleException("Product price cannot be negative");
         }
-        Optional<Product> existingBySku = productRepository.findBySku(sku.trim());
-        if (existingBySku.isPresent() && !existingBySku.get().getId().equals(id)) {
-            throw new BusinessRuleException("A product with SKU " + sku.trim() + " already exists");
+        if (quantityInStock < 0) {
+            throw new BusinessRuleException("Initial stock cannot be negative");
         }
-        Product product;
-        if (id != null) {
-            product = getById(id);
-            product.setSku(sku.trim());
-            product.setName(name.trim());
-            product.setDescription(description);
-            product.setUnitPrice(unitPrice);
-        } else {
-            product = new Product(sku.trim(), name.trim(), description, unitPrice, 0);
-        }
+        Product product = new Product(name, price, quantityInStock);
         return productRepository.save(product);
     }
 
-    @Transactional
-    public Product adjustStock(Long id, int newQuantity) {
-        if (newQuantity < 0) {
-            throw new BusinessRuleException("Stock quantity must be zero or greater");
+    public void decreaseStock(Product product, int quantity) {
+        if (!product.hasSufficientStock(quantity)) {
+            throw new BusinessRuleException("Insufficient stock for product: " + product.getId());
         }
-        Product product = getById(id);
-        product.setQuantityOnHand(newQuantity);
-        return productRepository.save(product);
+        product.decreaseStock(quantity);
+        productRepository.save(product);
     }
 }

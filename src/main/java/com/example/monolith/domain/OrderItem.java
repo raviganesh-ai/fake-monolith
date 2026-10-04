@@ -1,96 +1,49 @@
 package com.example.monolith.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import java.math.BigDecimal;
+import jakarta.persistence.Embeddable;
 
 /**
- * A single line within an order. Captures the unit price at order time so that
- * later product-price changes do not alter historical orders.
+ * Line item within an Order aggregate.
  */
-@Entity
+@Embeddable
 public class OrderItem {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long productId;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "order_id")
-    private Order order;
+    private String productName;
 
-    @ManyToOne(optional = false)
-    private Product product;
-
-    @Column(nullable = false)
     private int quantity;
 
-    @Column(nullable = false)
-    private BigDecimal unitPriceAtOrder;
+    private double unitPrice;
 
-    @Column(nullable = false)
-    private BigDecimal lineTotal;
-
-    public OrderItem() {
+    protected OrderItem() {
+        // JPA
     }
 
-    public OrderItem(Product product, int quantity, BigDecimal unitPriceAtOrder, BigDecimal lineTotal) {
-        this.product = product;
+    public OrderItem(Long productId, String productName, int quantity, double unitPrice) {
+        this.productId = productId;
+        this.productName = productName;
         this.quantity = quantity;
-        this.unitPriceAtOrder = unitPriceAtOrder;
-        this.lineTotal = lineTotal;
+        this.unitPrice = unitPrice;
     }
 
-    public Long getId() {
-        return id;
+    public Long getProductId() {
+        return productId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
+    public String getProductName() {
+        return productName;
     }
 
     public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public double getUnitPrice() {
+        return unitPrice;
     }
 
-    public BigDecimal getUnitPriceAtOrder() {
-        return unitPriceAtOrder;
-    }
-
-    public void setUnitPriceAtOrder(BigDecimal unitPriceAtOrder) {
-        this.unitPriceAtOrder = unitPriceAtOrder;
-    }
-
-    public BigDecimal getLineTotal() {
-        return lineTotal;
-    }
-
-    public void setLineTotal(BigDecimal lineTotal) {
-        this.lineTotal = lineTotal;
+    public double getLineTotal() {
+        return unitPrice * quantity;
     }
 }

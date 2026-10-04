@@ -1,23 +1,13 @@
 package com.example.monolith.domain;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import java.math.BigDecimal;
+import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A customer order. Mapped to table "orders" because ORDER is a reserved SQL word.
+ * Order aggregate root for the order-module.
  */
 @Entity
 @Table(name = "orders")
@@ -27,58 +17,40 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false)
-    private Customer customer;
+    private Long customerId;
 
-    @Column(nullable = false)
-    private LocalDateTime orderDate;
+    private String customerName;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private OrderStatus status = OrderStatus.NEW;
+    private OrderStatus status;
 
-    @Column(nullable = false)
-    private BigDecimal totalAmount = BigDecimal.ZERO;
+    private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ElementCollection
+    @CollectionTable(name = "order_items", joinColumns = @JoinColumn(name = "order_id"))
     private List<OrderItem> items = new ArrayList<>();
 
-    public Order() {
+    protected Order() {
+        // JPA
     }
 
-    public Order(Customer customer) {
-        this.customer = customer;
-        this.orderDate = LocalDateTime.now();
+    public Order(Long customerId, String customerName) {
+        this.customerId = customerId;
+        this.customerName = customerName;
         this.status = OrderStatus.NEW;
-    }
-
-    public void addItem(OrderItem item) {
-        item.setOrder(this);
-        this.items.add(item);
+        this.createdAt = LocalDateTime.now();
     }
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Long getCustomerId() {
+        return customerId;
     }
 
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
-    public LocalDateTime getOrderDate() {
-        return orderDate;
-    }
-
-    public void setOrderDate(LocalDateTime orderDate) {
-        this.orderDate = orderDate;
+    public String getCustomerName() {
+        return customerName;
     }
 
     public OrderStatus getStatus() {
@@ -89,19 +61,19 @@ public class Order {
         this.status = status;
     }
 
-    public BigDecimal getTotalAmount() {
-        return totalAmount;
-    }
-
-    public void setTotalAmount(BigDecimal totalAmount) {
-        this.totalAmount = totalAmount;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
     public List<OrderItem> getItems() {
         return items;
     }
 
-    public void setItems(List<OrderItem> items) {
-        this.items = items;
+    public void addItem(OrderItem item) {
+        this.items.add(item);
+    }
+
+    public double getTotalAmount() {
+        return items.stream().mapToDouble(OrderItem::getLineTotal).sum();
     }
 }
