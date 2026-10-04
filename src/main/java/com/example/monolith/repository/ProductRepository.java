@@ -3,9 +3,8 @@ package com.example.monolith.repository;
 import com.example.monolith.domain.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Optional;
-
+/**
+ * Repository for the product-module.
+ */
 public interface ProductRepository extends JpaRepository<Product, Long> {
-
-    Optional<Product> findBySku(String sku);
 }

@@ -1,8 +1,7 @@
 package com.example.monolith.service;
 
 /**
- * Thrown when a requested entity does not exist. Mapped to an HTTP 404 page by
- * the web layer's exception handler.
+ * Domain-specific not-found exception mapped to 404 responses.
  */
 public class NotFoundException extends RuntimeException {
 

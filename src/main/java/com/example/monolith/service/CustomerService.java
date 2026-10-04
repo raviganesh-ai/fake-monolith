@@ -7,7 +7,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * Customer-module service encapsulating customer business logic.
+ */
 @Service
+@Transactional
 public class CustomerService {
 
     private final CustomerRepository customerRepository;
@@ -20,16 +24,16 @@ public class CustomerService {
         return customerRepository.findAll();
     }
 
-    public Customer getById(Long id) {
+    public Customer findById(Long id) {
         return customerRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Customer " + id + " not found"));
+                .orElseThrow(() -> new NotFoundException("Customer not found: " + id));
     }
 
-    @Transactional
-    public Customer create(String name, String email, String phone, String address) {
-        if (name == null || name.trim().isEmpty()) {
+    public Customer create(String name, String email) {
+        if (name == null || name.isBlank()) {
             throw new BusinessRuleException("Customer name is required");
         }
-        return customerRepository.save(new Customer(name.trim(), email, phone, address));
+        Customer customer = new Customer(name, email);
+        return customerRepository.save(customer);
     }
 }

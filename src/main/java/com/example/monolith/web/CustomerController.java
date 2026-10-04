@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+/**
+ * Web-module controller exposing customer-module functionality.
+ */
 @Controller
 @RequestMapping("/customers")
 public class CustomerController {
@@ -22,30 +25,20 @@ public class CustomerController {
     @GetMapping
     public String list(Model model) {
         model.addAttribute("customers", customerService.findAll());
-        return "customers/list";
-    }
-
-    @GetMapping("/new")
-    public String newForm() {
-        return "customers/form";
+        return "customers";
     }
 
     @PostMapping
-    public String create(@RequestParam(required = false) String name,
+    public String create(@RequestParam String name,
                          @RequestParam(required = false) String email,
-                         @RequestParam(required = false) String phone,
-                         @RequestParam(required = false) String address,
                          Model model) {
         try {
-            customerService.create(name, email, phone, address);
+            customerService.create(name, email);
             return "redirect:/customers";
         } catch (BusinessRuleException ex) {
             model.addAttribute("error", ex.getMessage());
-            model.addAttribute("name", name);
-            model.addAttribute("email", email);
-            model.addAttribute("phone", phone);
-            model.addAttribute("address", address);
-            return "customers/form";
+            model.addAttribute("customers", customerService.findAll());
+            return "customers";
         }
     }
 }

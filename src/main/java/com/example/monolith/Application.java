@@ -4,9 +4,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * Application entry point for the legacy-style order-management monolith.
+ * Bootstrap class for the modular monolith application.
  *
- * Satisfies AC-1 (the application starts and serves the home page).
+ * The application remains a single deployable Spring Boot service, while
+ * internal packages are organized into feature-oriented modules (customers,
+ * products, orders, web, and data initialization).
  */
 @SpringBootApplication
 public class Application {
